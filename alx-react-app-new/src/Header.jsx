@@ -1,7 +1,7 @@
 function Header() {
     return (
         <header style={{ 
-            backgroundColor: 'navy', 
+            backgroundColor: 'tomato red', 
             color: 'white', 
             textAlign: 'center', 
             padding: '20px', 
