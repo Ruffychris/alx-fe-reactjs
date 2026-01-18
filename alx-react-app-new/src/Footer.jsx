@@ -1,15 +1,18 @@
-function Footer() {
-    return (
-        <footer style={{ 
-            backgroundColor: 'gray', 
-            color: 'white', 
-            textAlign: 'center', 
-            padding: '20px', 
-            borderRadius: '5px' 
-        }}>
-            <p>© 2023 City Lovers</p>
-        </footer>
-    );
-}
+import React from 'react';
+
+const Footer = () => {
+  return (
+    <footer style={{
+      backgroundColor: 'navy',
+      color: 'white',
+      textAlign: 'center',
+      padding: '10px',
+      marginTop: '20px',
+      borderRadius: '5px'
+    }}>
+      <p>&copy; 2026 My Travel Blog</p>
+    </footer>
+  );
+};
 
 export default Footer;
