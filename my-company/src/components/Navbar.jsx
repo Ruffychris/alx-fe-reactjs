@@ -7,6 +7,8 @@ function Navbar() {
       backgroundColor: 'navy',
       color: 'white',
       display: 'flex',
+      justifyContent: 'space-around', // <-- Add this line
+      alignItems: 'center',
       gap: '15px'
     }}>
       <Link to="/" style={{ color: 'white', textDecoration: 'none' }}>Home</Link>
