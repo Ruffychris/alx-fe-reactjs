@@ -9,7 +9,7 @@ const MainContent = () => {
       borderRadius: '5px',
       fontFamily: 'Arial, sans-serif'
     }}>
-      <p>Welcome to my travel blog! Here you will find information about my favorite cities around the world.</p>
+      <p>I love to visit New York, Paris, and Tokyo.</p>
     </main>
   );
 };
