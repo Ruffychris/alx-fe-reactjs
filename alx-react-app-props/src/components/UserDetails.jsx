@@ -1,9 +1,9 @@
 import { useContext } from 'react';
-import UserContext from '../../UserContext'; // because file is in project root
+import UserContext from './UserContext';
 
 function UserDetails() {
   const userData = useContext(UserContext);
-
+  
   return (
     <div>
       <p>Name: {userData.name}</p>
