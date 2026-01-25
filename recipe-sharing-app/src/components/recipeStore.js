@@ -7,6 +7,7 @@ export const useRecipeStore = create((set) => ({
   favorites: [],
   recommendations: [],
 
+  // INITIAL TASK ACTIONS
   addRecipe: (newRecipe) =>
     set((state) => {
       const updatedRecipes = [...state.recipes, newRecipe];
@@ -15,6 +16,12 @@ export const useRecipeStore = create((set) => ({
         filteredRecipes: updatedRecipes,
       };
     }),
+
+  setRecipes: (recipes) =>
+    set((state) => ({
+      recipes,
+      filteredRecipes: recipes,
+    })),
 
   deleteRecipe: (id) =>
     set((state) => {
@@ -47,6 +54,7 @@ export const useRecipeStore = create((set) => ({
       ),
     })),
 
+  // FAVORITES & RECOMMENDATIONS
   addFavorite: (recipeId) =>
     set((state) => ({
       favorites: state.favorites.includes(recipeId)
