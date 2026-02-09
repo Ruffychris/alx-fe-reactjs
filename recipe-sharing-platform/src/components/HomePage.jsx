@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from "react";
-import recipeData from "../data.json";
+import data from "../data.json";
 
 const HomePage = () => {
   const [recipes, setRecipes] = useState([]);
 
   useEffect(() => {
-    setRecipes(recipeData); // Load mock data into state
+    setRecipes(data); // Load mock data on mount
   }, []);
 
   return (
@@ -16,7 +16,7 @@ const HomePage = () => {
         {recipes.map((recipe) => (
           <div
             key={recipe.id}
-            className="bg-white rounded-lg shadow-md hover:shadow-xl transition-transform transform hover:scale-105 overflow-hidden"
+            className="bg-white rounded-lg shadow-md overflow-hidden transform hover:scale-105 hover:shadow-xl transition duration-300"
           >
             <img
               src={recipe.image}
