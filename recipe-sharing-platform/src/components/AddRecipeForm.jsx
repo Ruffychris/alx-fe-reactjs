@@ -6,14 +6,14 @@ const AddRecipeForm = () => {
 
   const [title, setTitle] = useState("");
   const [ingredients, setIngredients] = useState("");
-  const [instructions, setInstructions] = useState("");
+  const [steps, setSteps] = useState(""); // ✅ renamed from instructions
   const [error, setError] = useState("");
 
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    // Basic Validation
-    if (!title || !ingredients || !instructions) {
+    // Validation
+    if (!title || !ingredients || !steps) {
       setError("All fields are required.");
       return;
     }
@@ -23,7 +23,7 @@ const AddRecipeForm = () => {
       .map((item) => item.trim())
       .filter((item) => item.length > 0);
 
-    const instructionsArray = instructions
+    const stepsArray = steps
       .split("\n")
       .map((step) => step.trim())
       .filter((step) => step.length > 0);
@@ -33,18 +33,18 @@ const AddRecipeForm = () => {
       return;
     }
 
-    if (instructionsArray.length < 1) {
-      setError("Please provide at least 1 instruction.");
+    if (stepsArray.length < 1) {
+      setError("Please provide at least 1 step.");
       return;
     }
 
     const newRecipe = {
       id: Date.now(),
       title,
-      summary: `${instructionsArray[0].slice(0, 50)}...`,
-      image: "https://via.placeholder.com/300x200", // Placeholder image
+      summary: `${stepsArray[0].slice(0, 50)}...`,
+      image: "https://via.placeholder.com/300x200",
       ingredients: ingredientsArray,
-      instructions: instructionsArray,
+      instructions: stepsArray, // we can still store internally as instructions
     };
 
     console.log("New Recipe Submitted:", newRecipe);
@@ -52,10 +52,9 @@ const AddRecipeForm = () => {
     // Reset form
     setTitle("");
     setIngredients("");
-    setInstructions("");
+    setSteps("");
     setError("");
 
-    // Redirect to Home Page (optional)
     navigate("/");
   };
 
@@ -64,9 +63,7 @@ const AddRecipeForm = () => {
       <h1 className="text-3xl font-bold mb-6 text-center">Add a New Recipe</h1>
 
       {error && (
-        <div className="bg-red-100 text-red-700 p-3 rounded mb-4">
-          {error}
-        </div>
+        <div className="bg-red-100 text-red-700 p-3 rounded mb-4">{error}</div>
       )}
 
       <form
@@ -104,8 +101,8 @@ const AddRecipeForm = () => {
             Preparation Steps (one per line)
           </label>
           <textarea
-            value={instructions}
-            onChange={(e) => setInstructions(e.target.value)}
+            value={steps} // ✅ changed from instructions
+            onChange={(e) => setSteps(e.target.value)}
             className="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
             rows={6}
             placeholder="Step 1: ..., Step 2: ..."
@@ -114,7 +111,7 @@ const AddRecipeForm = () => {
 
         <button
           type="submit"
-          className="w-full bg-blue-500 text-white font-semibold py-2 rounded hover:bg-blue-600 transition"
+          className="w-full bg-blue-500 text-white font-semibold py-2 rounded hover:bg-blue-600 transition shadow"
         >
           Add Recipe
         </button>
