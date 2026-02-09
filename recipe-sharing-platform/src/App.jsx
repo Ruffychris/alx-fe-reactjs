@@ -8,7 +8,7 @@ function App() {
 
   return (
     <>
-    <div className="text-blue-500">Tailwind is working!</div>
+      <div className="text-blue-500 text-3xl p-4">Tailwind Works!</div>
 
       <div>
         <a href="https://vite.dev" target="_blank">
