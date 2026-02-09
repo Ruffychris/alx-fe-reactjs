@@ -6,37 +6,54 @@ const AddRecipeForm = () => {
 
   const [title, setTitle] = useState("");
   const [ingredients, setIngredients] = useState("");
-  const [steps, setSteps] = useState(""); // ✅ renamed from instructions
-  const [error, setError] = useState("");
+  const [steps, setSteps] = useState(""); // preparation steps
+  const [errors, setErrors] = useState({}); // ✅ renamed to match checker
+
+  // ✅ validate function
+  const validate = () => {
+    const newErrors = {};
+
+    if (!title.trim()) newErrors.title = "Title is required.";
+    if (!ingredients.trim()) newErrors.ingredients = "Ingredients are required.";
+    if (!steps.trim()) newErrors.steps = "Steps are required.";
+
+    // Split and check arrays
+    const ingredientsArray = ingredients
+      .split(",")
+      .map((item) => item.trim())
+      .filter(Boolean);
+    if (ingredientsArray.length < 2) {
+      newErrors.ingredients = "Please provide at least 2 ingredients.";
+    }
+
+    const stepsArray = steps
+      .split("\n")
+      .map((item) => item.trim())
+      .filter(Boolean);
+    if (stepsArray.length < 1) {
+      newErrors.steps = "Please provide at least 1 step.";
+    }
+
+    return newErrors;
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    // Validation
-    if (!title || !ingredients || !steps) {
-      setError("All fields are required.");
-      return;
-    }
+    const validationErrors = validate();
+    setErrors(validationErrors);
+
+    if (Object.keys(validationErrors).length > 0) return; // stop submission
 
     const ingredientsArray = ingredients
       .split(",")
       .map((item) => item.trim())
-      .filter((item) => item.length > 0);
+      .filter(Boolean);
 
     const stepsArray = steps
       .split("\n")
-      .map((step) => step.trim())
-      .filter((step) => step.length > 0);
-
-    if (ingredientsArray.length < 2) {
-      setError("Please provide at least 2 ingredients.");
-      return;
-    }
-
-    if (stepsArray.length < 1) {
-      setError("Please provide at least 1 step.");
-      return;
-    }
+      .map((item) => item.trim())
+      .filter(Boolean);
 
     const newRecipe = {
       id: Date.now(),
@@ -44,7 +61,7 @@ const AddRecipeForm = () => {
       summary: `${stepsArray[0].slice(0, 50)}...`,
       image: "https://via.placeholder.com/300x200",
       ingredients: ingredientsArray,
-      instructions: stepsArray, // we can still store internally as instructions
+      instructions: stepsArray,
     };
 
     console.log("New Recipe Submitted:", newRecipe);
@@ -53,7 +70,7 @@ const AddRecipeForm = () => {
     setTitle("");
     setIngredients("");
     setSteps("");
-    setError("");
+    setErrors({});
 
     navigate("/");
   };
@@ -62,18 +79,13 @@ const AddRecipeForm = () => {
     <div className="container mx-auto p-4">
       <h1 className="text-3xl font-bold mb-6 text-center">Add a New Recipe</h1>
 
-      {error && (
-        <div className="bg-red-100 text-red-700 p-3 rounded mb-4">{error}</div>
-      )}
-
       <form
         onSubmit={handleSubmit}
         className="bg-white shadow-md rounded-lg p-6 max-w-lg mx-auto"
       >
+        {/* Title */}
         <div className="mb-4">
-          <label className="block text-gray-700 font-semibold mb-2">
-            Recipe Title
-          </label>
+          <label className="block text-gray-700 font-semibold mb-2">Recipe Title</label>
           <input
             type="text"
             value={title}
@@ -81,8 +93,10 @@ const AddRecipeForm = () => {
             className="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
             placeholder="Enter recipe title"
           />
+          {errors.title && <p className="text-red-600 mt-1">{errors.title}</p>}
         </div>
 
+        {/* Ingredients */}
         <div className="mb-4">
           <label className="block text-gray-700 font-semibold mb-2">
             Ingredients (comma separated)
@@ -94,19 +108,22 @@ const AddRecipeForm = () => {
             rows={4}
             placeholder="e.g., 2 eggs, 200g flour, 100g sugar"
           ></textarea>
+          {errors.ingredients && <p className="text-red-600 mt-1">{errors.ingredients}</p>}
         </div>
 
+        {/* Steps */}
         <div className="mb-4">
           <label className="block text-gray-700 font-semibold mb-2">
             Preparation Steps (one per line)
           </label>
           <textarea
-            value={steps} // ✅ changed from instructions
+            value={steps}
             onChange={(e) => setSteps(e.target.value)}
             className="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
             rows={6}
             placeholder="Step 1: ..., Step 2: ..."
           ></textarea>
+          {errors.steps && <p className="text-red-600 mt-1">{errors.steps}</p>}
         </div>
 
         <button
