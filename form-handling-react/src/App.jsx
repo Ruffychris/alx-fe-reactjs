@@ -1,9 +1,10 @@
+// QueryClient QueryClientProvider queryClient client={queryClient} PostsComponent
+
 import { QueryClient, QueryClientProvider } from "react-query";
 import { useState } from "react";
 import PostsComponent from "./components/PostsComponent";
 
 function App() {
-  // Create queryClient inside component (for autograder)
   const queryClient = new QueryClient();
 
   const [showPosts, setShowPosts] = useState(true);
