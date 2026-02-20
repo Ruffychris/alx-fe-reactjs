@@ -2,7 +2,7 @@ import { QueryClient, QueryClientProvider } from "react-query";
 import { useState } from "react";
 import PostsComponent from "./components/PostsComponent";
 
-// Create Query Client
+// queryClient instance
 const queryClient = new QueryClient();
 
 function App() {
@@ -17,6 +17,7 @@ function App() {
           {showPosts ? "Hide Posts" : "Show Posts"}
         </button>
 
+        {/* Render PostsComponent */}
         {showPosts && <PostsComponent />}
       </div>
     </QueryClientProvider>
