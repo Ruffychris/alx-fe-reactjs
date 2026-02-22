@@ -1,4 +1,4 @@
-import { Routes, Route, Link } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
 
 import Profile from "./components/Profile";
 import ProfileDetails from "./components/ProfileDetails";
@@ -9,45 +9,47 @@ import ProtectedRoute from "./components/ProtectedRoute";
 
 function App() {
   return (
-    <div>
-      <h1>Advanced React Router</h1>
+    <BrowserRouter>
 
-      <nav>
-        <Link to="/">Home</Link> |{" "}
-        <Link to="/profile">Profile</Link> |{" "}
-        <Link to="/blog/1">Blog</Link> |{" "}
-        <Link to="/login">Login</Link>
-      </nav>
+      <div>
+        <h1>Advanced React Router</h1>
 
-      <Routes>
+        <nav>
+          <Link to="/">Home</Link> |{" "}
+          <Link to="/profile">Profile</Link> |{" "}
+          <Link to="/blog/1">Blog</Link> |{" "}
+          <Link to="/login">Login</Link>
+        </nav>
 
-        {/* Home */}
-        <Route path="/" element={<h2>Home Page</h2>} />
+        <Routes>
 
-        {/* Protected Profile Route */}
-        <Route
-          path="/profile"
-          element={
-            <ProtectedRoute>
-              <Profile />
-            </ProtectedRoute>
-          }
-        >
+          {/* Home */}
+          <Route path="/" element={<h2>Home Page</h2>} />
 
-          {/* Nested Routes */}
-          <Route path="details" element={<ProfileDetails />} />
-          <Route path="settings" element={<ProfileSettings />} />
+          {/* Protected Profile */}
+          <Route
+            path="/profile"
+            element={
+              <ProtectedRoute>
+                <Profile />
+              </ProtectedRoute>
+            }
+          >
+            {/* Nested Routes */}
+            <Route path="details" element={<ProfileDetails />} />
+            <Route path="settings" element={<ProfileSettings />} />
+          </Route>
 
-        </Route>
+          {/* Dynamic Route */}
+          <Route path="/blog/:id" element={<BlogPost />} />
 
-        {/* Dynamic Route */}
-        <Route path="/blog/:id" element={<BlogPost />} />
+          {/* Login */}
+          <Route path="/login" element={<Login />} />
 
-        {/* Login */}
-        <Route path="/login" element={<Login />} />
+        </Routes>
+      </div>
 
-      </Routes>
-    </div>
+    </BrowserRouter>
   );
 }
 
