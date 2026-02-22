@@ -42,10 +42,12 @@ const TodoList = () => {
               textDecoration: todo.completed ? "line-through" : "none",
               cursor: "pointer",
             }}
+            key={todo.id}
             data-testid={`todo-${todo.id}`}
-          >
+            onClick={() => toggleTodo(todo.id)}
+      >
             {todo.text}
-            <button onClick={() => deleteTodo(todo.id)}>Delete</button>
+            <button data-testid={`delete-${todo.id}`} onClick={() => deleteTodo(todo.id)}>Delete</button>
           </li>
         ))}
       </ul>
