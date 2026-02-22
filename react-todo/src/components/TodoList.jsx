@@ -37,17 +37,23 @@ const TodoList = () => {
         {todos.map((todo) => (
           <li
             key={todo.id}
+            data-testid={`todo-${todo.id}`}
             onClick={() => toggleTodo(todo.id)}
             style={{
               textDecoration: todo.completed ? "line-through" : "none",
               cursor: "pointer",
             }}
-            key={todo.id}
-            data-testid={`todo-${todo.id}`}
-            onClick={() => toggleTodo(todo.id)}
-      >
+          >
             {todo.text}
-            <button data-testid={`delete-${todo.id}`} onClick={() => deleteTodo(todo.id)}>Delete</button>
+            <button
+              data-testid={`delete-${todo.id}`}
+              onClick={(e) => {
+                e.stopPropagation();
+                deleteTodo(todo.id);
+              }}
+            >
+              Delete
+            </button>
           </li>
         ))}
       </ul>
